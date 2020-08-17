@@ -1,0 +1,15 @@
+{
+  "name": "cli_marketplace",
+  "version": "1.0.0",
+  "description": "A Command Line Interface marketplace app for Marketplacer!",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "DanLow",
+  "license": "ISC",
+  "dependencies": {
+    "prompts": "^2.3.2"
+  }
+}
