@@ -31,24 +31,27 @@ class UserCart {
     }
     getProductIDs(storeProducts, argvRequestedProducts) {
         return storeProducts.filter((product, index) => {
-            const { uuid } = product;
             if (index < argvRequestedProducts)
-                return uuid;
+                return product.uuid;
             // ADVICE: why does it return the whole object?
+            // expected: only the a uuid to be returned 
+            // acutal: the product object is returned
         });
     }
-    // ADVICE: why does this break when uncommented?
-    // getSum(storeProducts: object[], cartProducts: object[]) {
     getSum(storeProducts, cartProducts) {
+        // getSum(storeProducts: object[], cartProducts: object[]) {
+        // ADVICE: why does storeProduct.uuid and cartProduct.price get an error (this ^) is uncommented?
+        // expected: no error as storeProducts is an array of objects
+        // actual: error property doesn't exist
         let accumulator = 0;
         const cartProductPrices = cartProducts.map((cartProduct) => storeProducts.find((storeProduct) => storeProduct.uuid === cartProduct.uuid).price * 100);
         const sum = (cartProductPrices, accumulator) => {
             if (cartProductPrices.length == 0) {
-                // AGRH!: something about the call stack/ inheritance is breaking here :,C
                 return accumulator;
+                // an error lies in the return value of accumulator
+                // expected: total sum of cartProductPrices
+                // actual: undefined
             }
-            console.log(cartProductPrices);
-            console.log(accumulator);
             sum(cartProductPrices.slice(1), accumulator + cartProductPrices[0]);
         };
         return sum(cartProductPrices, accumulator);
@@ -72,9 +75,16 @@ class UserCart {
 const currentUser = new UserCart(storeProducts, argvRequestedProducts);
 console.log(`
 Products in Shopping Cart:
-${currentUser.}
-Discount applied: 20% off on total greater than $100
 
-TOTAL: $163.65
+${currentUser.productIDs
+    .map((product, index) => {
+    const { name, price } = product;
+    return `${index + 1}. ${name} - ${price}\n`;
+})
+    .join("")}
+
+Discount applied: < Insert Discount Logic > 
+
+TOTAL: < Await Discount Logic Insertion > 
 
 `);
