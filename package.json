@@ -10,6 +10,8 @@
   "author": "DanLow",
   "license": "ISC",
   "dependencies": {
-    "prompts": "^2.3.2"
+    "@types/node": "^14.6.0",
+    "prompts": "^2.3.2",
+    "typescript": "^3.9.7"
   }
 }
